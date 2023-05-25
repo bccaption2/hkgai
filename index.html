@@ -1,19 +1,20 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>Audio File Upload</title>
+  <title>Audio File Transcription</title>
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 </head>
 <body>
-  <h1>Audio File Upload 525_A1</h1>
+  <h1>Audio File Transcription_525_B1</h1>
   
   <form id="upload-form">
     <input type="file" id="audio-file" accept="audio/*">
-    <button type="submit">Upload</button>
+    <button type="submit">Transcribe</button>
   </form>
   
   <div id="result" style="display: none;">
-    <h2>Uploaded File Details</h2>
-    <p id="file-size"></p>
+    <h2>Transcription Result</h2>
+    <p id="transcription-text"></p>
   </div>
 
   <script>
@@ -23,8 +24,23 @@
       var fileInput = document.getElementById("audio-file");
       var file = fileInput.files[0];
       if (file) {
-        document.getElementById("file-size").textContent = "File size: " + (file.size / (1024 * 1024)).toFixed(2) + " MB";
-        document.getElementById("result").style.display = "block";
+        var formData = new FormData();
+        formData.append("audio", file);
+
+        $.ajax({
+          url: "https://api.openai.com/v1",
+          type: "POST",
+          data: formData,
+          contentType: false,
+          processData: false,
+          success: function(response) {
+            document.getElementById("transcription-text").textContent = response.transcription;
+            document.getElementById("result").style.display = "block";
+          },
+          error: function(xhr, status, error) {
+            console.error("Error:", error);
+          }
+        });
       }
     });
   </script>
