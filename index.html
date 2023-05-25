@@ -4,7 +4,7 @@
   <title>Audio File Transcription</title>
 </head>
 <body>
-  <h1>Audio File Transcription 535_B6</h1>
+  <h1>Audio File Transcription 535_B7</h1>
   
   <form id="upload-form">
     <input type="file" id="audio-file" accept="audio/*">
@@ -26,7 +26,7 @@
         var formData = new FormData();
         formData.append("file", file);
         formData.append("model", "whisper-1");
-        formData.append("language", "en"); // Replace with the appropriate language code for your audio
+        formData.append("language", "yue"); // Replace with the appropriate language code for your audio
 
         console.log("Uploading audio file...");
         var progress = document.createElement("progress");
