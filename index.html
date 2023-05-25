@@ -2,10 +2,9 @@
 <html>
 <head>
   <title>Audio File Transcription</title>
-  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 </head>
 <body>
-  <h1>Audio File Transcription 525_B3</h1>
+  <h1>Audio File Transcription</h1>
   
   <form id="upload-form">
     <input type="file" id="audio-file" accept="audio/*">
@@ -29,23 +28,19 @@
         formData.append("model", "whisper-1");
         formData.append("language", "en"); // Replace with the appropriate language code for your audio
 
-        $.ajax({
-          url: "https://api.openai.com/v1/audio/transcriptions",
-          type: "POST",
+        fetch("https://api.openai.com/v1/audio/transcriptions", {
+          method: "POST",
           headers: {
             "Authorization": "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",
           },
-          data: formData,
-          contentType: false,
-          processData: false,
-          success: function(response) {
-            document.getElementById("transcription-text").textContent = response.text;
+          body: formData,
+        })
+          .then(response => response.json())
+          .then(data => {
+            document.getElementById("transcription-text").textContent = data.text;
             document.getElementById("result").style.display = "block";
-          },
-          error: function(xhr, status, error) {
-            console.error("Error:", error);
-          }
-        });
+          })
+          .catch(error => console.error("Error:", error));
       }
     });
   </script>
