@@ -4,7 +4,7 @@
   <title>Audio File Transcription</title>
 </head>
 <body>
-  <h1>Audio File Transcription 525_B5</h1>
+  <h1>Audio File Transcription 535_B6</h1>
   
   <form id="upload-form">
     <input type="file" id="audio-file" accept="audio/*">
@@ -28,6 +28,10 @@
         formData.append("model", "whisper-1");
         formData.append("language", "en"); // Replace with the appropriate language code for your audio
 
+        console.log("Uploading audio file...");
+        var progress = document.createElement("progress");
+        document.body.appendChild(progress);
+
         fetch("https://api.openai.com/v1/audio/transcriptions", {
           method: "POST",
           headers: {
@@ -35,12 +39,20 @@
           },
           body: formData,
         })
-          .then(response => response.json())
+          .then(response => {
+            console.log("Transcription request sent. Waiting for response...");
+            progress.max = response.headers.get("Content-Length");
+            return response.json();
+          })
           .then(data => {
+            console.log("Transcription response received:", data);
             document.getElementById("transcription-text").textContent = data.text;
             document.getElementById("result").style.display = "block";
           })
-          .catch(error => console.error("Error:", error));
+          .catch(error => console.error("Error:", error))
+          .finally(() => {
+            document.body.removeChild(progress);
+          });
       }
     });
   </script>
