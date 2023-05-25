@@ -4,7 +4,7 @@
   <title>Audio File Transcription</title>
 </head>
 <body>
-  <h1>Audio File Transcription 535_B7</h1>
+  <h1>Audio File Transcription B9</h1>
   
   <form id="upload-form">
     <input type="file" id="audio-file" accept="audio/*">
@@ -17,6 +17,16 @@
   </div>
 
   <script>
+    function displayProgress(message) {
+      var progressElement = document.getElementById("progress");
+      progressElement.textContent = message;
+    }
+
+    function displayResult(result) {
+      document.getElementById("transcription-text").textContent = result;
+      document.getElementById("result").style.display = "block";
+    }
+
     document.getElementById("upload-form").addEventListener("submit", function(event) {
       event.preventDefault();
 
@@ -26,35 +36,33 @@
         var formData = new FormData();
         formData.append("file", file);
         formData.append("model", "whisper-1");
-        formData.append("language", "yue"); // Replace with the appropriate language code for your audio
+        formData.append("language", "yue"); // Replace with the appropriate language code for your audio (e.g., "yue" for Cantonese)
 
-        console.log("Uploading audio file...");
-        var progress = document.createElement("progress");
-        document.body.appendChild(progress);
+        displayProgress("Uploading audio file...");
 
         fetch("https://api.openai.com/v1/audio/transcriptions", {
           method: "POST",
           headers: {
-            "Authorization": "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",
+            "Authorization": "ip62kXxXVmRKpzI5KFuuT3BlbkFJoKKFcrJEQiDZmG2wakqK",
           },
           body: formData,
         })
           .then(response => {
-            console.log("Transcription request sent. Waiting for response...");
-            progress.max = response.headers.get("Content-Length");
+            displayProgress("Transcription request sent. Waiting for response...");
             return response.json();
           })
           .then(data => {
-            console.log("Transcription response received:", data);
-            document.getElementById("transcription-text").textContent = data.text;
-            document.getElementById("result").style.display = "block";
+            displayProgress("Transcription response received.");
+            displayResult(data.text);
           })
-          .catch(error => console.error("Error:", error))
-          .finally(() => {
-            document.body.removeChild(progress);
+          .catch(error => {
+            displayProgress("Error occurred during transcription.");
+            console.error("Error:", error);
           });
       }
     });
   </script>
+
+  <p id="progress"></p>
 </body>
 </html>
