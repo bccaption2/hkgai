@@ -4,7 +4,7 @@
   <title>Audio File Transcription</title>
 </head>
 <body>
-  <h1>Audio File Transcription Debug_525_PM1</h1>
+  <h1>Audio File Transcription_PM2</h1>
   
   <form id="upload-form">
     <input type="file" id="audio-file" accept="audio/*">
@@ -26,14 +26,13 @@
         var formData = new FormData();
         formData.append("file", file);
         formData.append("model", "whisper-1");
-        formData.append("language", "en"); // Set the language code to "en" for English content
+        formData.append("language", "en");
 
         fetch("https://api.openai.com/v1/audio/transcriptions", {
           method: "POST",
-            headers: {
-              "Authorization": "Bearer " + process.env.OPENAI_API_KEY,
-            },
-
+          headers: {
+            "Authorization": "Bearer " + process.env.OPENAI_API_KEY,
+          },
           body: formData,
         })
           .then(response => response.json())
