@@ -4,7 +4,7 @@
   <title>Audio File Transcription</title>
 </head>
 <body>
-  <h1>Audio File Transcription debugA1</h1>
+  <h1>Audio File Transcription debugA1en</h1>
   
   <form id="upload-form">
     <input type="file" id="audio-file" accept="audio/*">
@@ -26,7 +26,7 @@
         var formData = new FormData();
         formData.append("file", file);
         formData.append("model", "whisper-1");
-        formData.append("language", "yue"); // Replace with the appropriate language code for your audio (e.g., "yue" for Cantonese)
+        formData.append("language", "en"); // Replace with the appropriate language code for your audio (e.g., "yue" for Cantonese)
 
         fetch("https://api.openai.com/v1/audio/transcriptions", {
           method: "POST",
