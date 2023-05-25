@@ -4,7 +4,7 @@
   <title>Audio File Transcription</title>
 </head>
 <body>
-  <h1>Audio File Transcription Debug a5 new key</h1>
+  <h1>Audio File Transcription Debug a6 new Bearer</h1>
   
   <form id="upload-form">
     <input type="file" id="audio-file" accept="audio/*">
@@ -31,7 +31,7 @@
         fetch("https://api.openai.com/v1/audio/transcriptions", {
           method: "POST",
           headers: {
-            "Authorization": "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",
+            "Authorization": "Bearer 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",
           },
           body: formData,
         })
