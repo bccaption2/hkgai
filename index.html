@@ -5,7 +5,7 @@
   <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 </head>
 <body>
-  <h1>Audio File Transcription_525_B1</h1>
+  <h1>Audio File Transcription_525_B2</h1>
   
   <form id="upload-form">
     <input type="file" id="audio-file" accept="audio/*">
@@ -28,7 +28,7 @@
         formData.append("audio", file);
 
         $.ajax({
-          url: "https://api.openai.com/v1",
+          url: "https://api.openai.com/v1/audio/transcriptions",
           type: "POST",
           data: formData,
           contentType: false,
